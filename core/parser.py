@@ -2,7 +2,7 @@ import os
 
 PARSER_DIR = os.path.dirname(__file__)
 txt_file = PARSER_DIR + '/RU.txt'
-with open(txt_file, encoding='utf-8') as f:
+with open(txt_file, 'r', encoding='utf8') as f:
     mydata = f.read().splitlines()
 
 data = {}
