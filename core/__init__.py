@@ -1,1 +1,1 @@
-from .parser import data
+from .parser import open_txt, parse_data
