@@ -56,6 +56,9 @@ def get_cities_info():
     }, ensure_ascii=False).encode('utf8')
 
 if __name__ == '__main__':
-    txtdata = open_txt()
-    data = parse_data(txtdata)
-    app.run(host="127.0.0.1", port=8000, debug=True)
+    #txtdata = open_txt()
+    #data, data_id = parse_data(txtdata)
+    #app.run(host="127.0.0.1", port=8000, debug=True)
+    tmp = input()
+    word = transliterate(tmp)
+    print(word)
