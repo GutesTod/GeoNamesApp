@@ -2,6 +2,7 @@
 
 def transliterate(string):
 
+    glasnie = ['а', 'е', 'и', 'о', 'у', 'э', 'я', 'ы', 'ю', 'ё']
     capital_letters = {u'А': u'A',
                        u'Б': u'B',
                        u'В': u'V',
@@ -71,8 +72,16 @@ def transliterate(string):
                        u'я': u'ya',}
 
     translit_string = ""
-
+    checker = False
     for index, char in enumerate(string):
+        if (char in glasnie) and checker and char == 'е':
+            translit_string += 'ye'
+            checker = False
+            continue
+        else:
+            checker = False
+        if char in glasnie:
+            checker = True
         if char in lower_case_letters.keys():
             char = lower_case_letters[char]
         elif char in capital_letters.keys():
