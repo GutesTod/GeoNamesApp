@@ -14,6 +14,7 @@ def parse_data(datatxt):
     for datatmp in datatxt:
         tmp = datatmp.split('\t')
         data[tmp[0]] = {
+            'geocodeid' : tmp[0],
             'name' : tmp[1],
             'asciiname' : tmp[2],
             'alternatenames' : tmp[3],
@@ -35,3 +36,27 @@ def parse_data(datatxt):
         data_id[counter_id] = tmp[0]
         counter_id += 1
     return data, data_id
+
+def generate_dict_city(geonameid, row):
+    city = {
+        'geonameid': geonameid,
+        'name': row['name'],
+        'asciiname': row['asciiname'],
+        'alternatenames': row['alternatenames'],
+        'latitude': row['latitude'],
+        'longitude': row['longitude'],
+        'feature class': row['feature class'],
+        'feature code': row['feature code'],
+        'country code': row['country code'],
+        'cc2': row['cc2'],
+        'admin1 code': row['admin1 code'],
+        'admin2 code': row['admin2 code'],
+        'admin3 code': row['admin3 code'],
+        'admin4 code': row['admin4 code'],
+        'population': row['population'],
+        'elevation': row['elevation'],
+        'dem': row['dem'],
+        'timezone': row['timezone'],
+        'modification date': row['modification date']
+    }
+    return city
