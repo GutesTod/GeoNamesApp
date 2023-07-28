@@ -23,17 +23,17 @@ def get_cities():
         cities.append(city)
     return json.dumps(cities, ensure_ascii=False).encode('utf8')
 
-@app.route('/cities', methods=['GET'])
+@app.route('/api/two-cities', methods=['GET'])
 def get_cities_info():
-    city1_name = transliterate(request.args.get('city1_name'), 'ru', reversed=True)
-    city2_name = transliterate(request.args.get('city2_name'), 'ru', reversed=True)
+    city1_name = transliterate(request.args.get('city1_name'))
+    city2_name = transliterate(request.args.get('city2_name'))
     cities = [None, None]
     population_city1, population_city2 = -1, -1
     for geonameid, row in data.items():
-        if row['name'] == city1_name and population_city1 < int(row['population']):
+        if row['asciiname'] == city1_name and population_city1 < int(row['population']):
             cities[0] = generate_dict_city(geonameid, row)
             population_city1 = int(row['population'])
-        if row['name'] == city2_name and population_city2 < int(row['population']):
+        if row['asciiname'] == city2_name and population_city2 < int(row['population']):
             cities[1] = generate_dict_city(geonameid, row)
             population_city2 = int(row['population'])
     if cities[0] == None or cities[1] == None:
@@ -56,9 +56,6 @@ def get_cities_info():
     }, ensure_ascii=False).encode('utf8')
 
 if __name__ == '__main__':
-    #txtdata = open_txt()
-    #data, data_id = parse_data(txtdata)
-    #app.run(host="127.0.0.1", port=8000, debug=True)
-    tmp = input()
-    word = transliterate(tmp)
-    print(word)
+    txtdata = open_txt()
+    data, data_id = parse_data(txtdata)
+    app.run(host="127.0.0.1", port=8000, debug=True)
