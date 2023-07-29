@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request
-from core import parse_data, open_txt, generate_dict_city
+from core import parse_data, open_txt, generate_dict_city, main_data, timezone_data, parse_timezone
 from core import transliterate
 
 app = Flask(__name__)
@@ -47,7 +47,8 @@ def get_cities_info():
     if cities[0]['timezone'] == cities[1]['timezone']:
         same_timezone = True
     else:
-        same_timezone = False
+        # дополнительное задание с часами
+        same_timezone = float(data_time[cities[0]['timezone']]) - float(data_time[cities[1]['timezone']]) 
     return json.dumps({
         'city1': cities[0],
         'city2': cities[1],
@@ -55,7 +56,23 @@ def get_cities_info():
         'same_timezone': same_timezone
     }, ensure_ascii=False).encode('utf8')
 
+@app.route('/api/suggest-city', methods=['GET'])
+def suggest_city():
+    partial_name = transliterate(request.args.get('name'))
+    suggestions = []
+    if partial_name:
+        for geonameid, row in data.items():
+            if row['asciiname'].find(partial_name) == 0:
+                suggestions.append(data[geonameid]['asciiname'])
+            elif row['asciiname'].find(partial_name) != -1 and row['asciiname'][row['asciiname'].find(partial_name) - 1] == ' ':
+                suggestions.append(data[geonameid]['asciiname'])
+        return json.dumps({'suggestions': suggestions},  ensure_ascii=False).encode('utf8')
+    else:
+        return json.dumps({'error': 'Please provide a partial city name as input'})
+
 if __name__ == '__main__':
-    txtdata = open_txt()
+    txtdata = open_txt(main_data)
+    txttimezone = open_txt(timezone_data)
     data, data_id = parse_data(txtdata)
+    data_time = parse_timezone(txttimezone)
     app.run(host="127.0.0.1", port=8000, debug=True)
