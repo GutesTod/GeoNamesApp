@@ -18,7 +18,7 @@ class TestRESTApi(unittest.TestCase):
         cities = ['Выходный', 'Выборг', 'Москва', 'Улан-Удэ', 'Уфа', 'Воронеж', 'Воробьевка', 'Санкт-Петербуг', 'Волонтер']
         for i in range(1, len(cities)):
             try:
-                assert requests.get(f'http://127.0.0.1:8000/two-cities?city1_name={cities[i]}&city2_name={cities[i-1]}')
+                assert requests.get(f'http://127.0.0.1:8000/api/two-cities?city1_name={cities[i]}&city2_name={cities[i-1]}')
             except AssertionError:
-                print(requests.get(f'http://127.0.0.1:8000/two-cities?city1_name={cities[i]}&city2_name={cities[i-1]}'))
+                print(requests.get(f'http://127.0.0.1:8000/api/two-cities?city1_name={cities[i]}&city2_name={cities[i-1]}'))
         
