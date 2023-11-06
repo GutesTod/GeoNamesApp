@@ -1,5 +1,4 @@
-# TestTaskInfotecs
-__Программа для тестового задания "Программист Python" в "Инфотекс"__
+# GeoNamesApp
 ## Установка
 1. Клонируйте репозиторий на свой компьютер: `git clone https://github.com/GutesTod/TestTaskInfotecs.git`
 2. Установите необходимые зависимости: `pip install -r requirements.txt`
